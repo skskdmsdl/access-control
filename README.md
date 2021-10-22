@@ -6,4 +6,6 @@ Python_Personal_Project
 
 # Skills
 * Python
-* 
+* Django
+* SQLite
+
