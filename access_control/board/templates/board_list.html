@@ -14,13 +14,15 @@
                 </tr>
             </thead>
             <tbody>
+                {% for board in boards %}
                 <tr>
-                    <th>1</th>
-                    <th>2021.10.25 (월)</th>
-                    <th>ㅇㅇ대학교</th>
-                    <th>연구위원</th>
-                    <th>권정열</th>
+                    <th>{{ board.id }}</th>
+                    <th>{{ board.start_day|date:'Y.m.d (D)' }}</th>
+                    <th>{{ board.company }}</th>
+                    <th>{{ board.position }}</th>
+                    <th>{{ board.guest_name }}</th>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
