@@ -3,6 +3,7 @@
 {% block contents %}
 <div class="row mt-5">
     <div class="col-12">
+        <div id="today" class="mb-5 text-md-center font-weight-bold"></div>
         <table class="table">
             <thead>
                 <tr>
@@ -15,13 +16,15 @@
             </thead>
             <tbody>
                 {% for board in boards %}
-                <tr>
-                    <th>{{ board.id }}</th>
-                    <th>{{ board.start_day|date:'Y.m.d (D)' }}</th>
-                    <th>{{ board.company }}</th>
-                    <th>{{ board.position }}</th>
-                    <th>{{ board.guest_name }}</th>
-                </tr>
+                    <!-- {% if board.start_day  %} -->
+                    <tr>
+                        <th>{{ forloop.counter }}</th>
+                        <th>{{ board.start_day|date:'Y.m.d (D)' }}</th>
+                        <th>{{ board.company }}</th>
+                        <th>{{ board.position }}</th>
+                        <th>{{ board.guest_name }}</th>
+                    </tr>
+                    <!-- {% endif %} -->
                 {% endfor %}
             </tbody>
         </table>
@@ -32,4 +35,15 @@
         <button class="btn btn-primary">등록</button>
     </div>
 </div>
+
+<script>
+    let today = new Date();
+
+    let year = today.getFullYear(); // 년도
+    let month = today.getMonth() + 1; // 월
+    let day = today.getDate(); // 일
+    
+    document.getElementById('today').innerHTML = year + '년 ' + month + '월' + day + '일';
+</script>
+
 {% endblock %}
