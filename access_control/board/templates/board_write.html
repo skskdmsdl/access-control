@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block contents %}
+<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> 
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script>
+$(document).ready(function() {
+    $('.datepicker').datepicker();
+});
+</script> -->
+
+
+<div class="row mt-5">
+    <div class="col-12">
+        <form method="POST" action="."> <!-- 현재 주소에 액션을 할 것이기에 .을 입력하거나 생략해도 됨-->
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {% ifequal field.name 'contents' %}
+                <textarea class="form-control" name="{{ field.name }}" placeholder="{{ field.label }}"></textarea>
+                {% else %}
+                <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}" placeholder="{{ field.label }}" name="{{ field.name }}">
+                {% endifequal %}
+            </div>
+            {% if field.errors %}
+            <span style="color: red">{{ field.errors }}</span>
+            {% endif %}
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">등록</button>
+            <button type="button" class="btn btn-primary" onclick="location.href='/board/list/'">돌아가기</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

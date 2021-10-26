@@ -3,8 +3,8 @@ from django.db import models
 # Create your models here.
 
 class Board(models.Model):
-    start_day = models.DateField(verbose_name='시작날짜')
-    end_day = models.DateField(verbose_name='종료날짜')
+    start_date = models.DateField(verbose_name='시작날짜')
+    end_date = models.DateField(verbose_name='종료날짜')
     company = models.CharField(max_length=128,
                                 verbose_name='업체명')
     position = models.CharField(max_length=128,

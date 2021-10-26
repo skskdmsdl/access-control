@@ -7,7 +7,6 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>일시</th>
                     <th>업체명</th>
                     <th>직책</th>
@@ -16,10 +15,9 @@
             </thead>
             <tbody>
                 {% for board in boards %}
-                    {% if board.start_day|date:'Ymd' <= time|date:'Ymd' and board.end_day|date:'Ymd' >= time|date:'Ymd' %}
+                    {% if board.start_date|date:'Ymd' <= time|date:'Ymd' and board.end_date|date:'Ymd' >= time|date:'Ymd' %}
                     <tr>
-                        <th>{{ forloop.counter }}</th>
-                        <th>{{ board.start_day|date:'Y.m.d (D)' }}</th>
+                        <th>{{ board.start_date|date:'Y.m.d (D)' }} ~ {{ board.end_date|date:'Y.m.d (D)' }}</th>
                         <th>{{ board.company }}</th>
                         <th>{{ board.position }}</th>
                         <th>{{ board.guest_name }}</th>
@@ -32,7 +30,7 @@
 </div>
 <div class="row">
     <div class="col-12">
-        <button class="btn btn-primary">등록</button>
+        <button class="btn btn-primary" onclick="location.href='/board/write/'">등록</button>
     </div>
 </div>
 
