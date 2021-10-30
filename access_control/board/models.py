@@ -20,3 +20,4 @@ class Board(models.Model):
         db_table = 'board'
         verbose_name = '출입명단'
         verbose_name_plural = '출입명단' 
+
