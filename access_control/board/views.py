@@ -4,12 +4,14 @@ from datetime import datetime
 from .forms import BoardForm
 import xlwt
 from django.http import HttpResponse
-
+from datetime import datetime
 
 # Create your views here.
 
 # excel 다운로드
 def excel_export(request):
+
+    today = datetime.today().strftime('%Y-%m-%d')
 	
     response = HttpResponse(content_type="application/vnd.ms-excel")
     response["Content-Disposition"] = 'attachment;filename*=UTF-8\'\'example.xls' 
@@ -25,7 +27,8 @@ def excel_export(request):
         
     
     #데이터 베이스에서 유저 정보를 불러온다.
-    rows = Board.objects.all().values_list('start_date', 'company', 'position', 'guest_name') 
+    # rows = Board.objects.all().values_list('start_date', 'company', 'position', 'guest_name') 
+    rows = Board.objects.filter(start_date__gte = today, end_date__lte = today).values_list('start_date', 'company', 'position', 'guest_name') 
     
     #유저정보를 한줄씩 작성한다.
     for row in rows:
