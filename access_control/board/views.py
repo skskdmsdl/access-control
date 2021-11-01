@@ -23,7 +23,7 @@ def excel_export(request):
     ws = wb.add_sheet('출입 신청', cell_overwrite_ok=True) #시트 추가 및 overwrite true 설정
     
     row_num = 0
-    col_names = ['날짜', '업체명', '직책', '이름']
+    col_names = ['번호', '날짜', '업체명', '직책', '이름']
     
     #열이름을 첫번째 행에 추가 시켜준다.
     for idx, col_name in enumerate(col_names):
@@ -32,7 +32,7 @@ def excel_export(request):
     
     #데이터 베이스에서 유저 정보를 불러온다.
     # rows = Board.objects.all().values_list('start_date', 'company', 'position', 'guest_name') 
-    rows = Board.objects.filter(start_date__gte = today, end_date__lte = today).values_list('start_date', 'company', 'position', 'guest_name')
+    rows = Board.objects.filter(start_date__gte = today, end_date__lte = today).values_list('start_date', 'start_date', 'company', 'position', 'guest_name')
 
     # 날짜 서식으로 변경
     date_format = xlwt.XFStyle()
@@ -43,9 +43,10 @@ def excel_export(request):
     for row in rows:
         row_num +=1
         for col_num in range(len(row)):
-            ws.write(row_num, col_num, row[col_num], date_format)
-            ws.write(row_num, 0, todayValue, date_format)
-            ws.col(0).width = 25*255
+            ws.write(row_num, col_num, row[col_num])
+            ws.write(row_num, 0, row_num)
+            ws.write(row_num, 1, todayValue, date_format)
+            ws.col(1).width = 25*255
             
     wb.save(response)
     
