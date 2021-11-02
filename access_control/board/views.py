@@ -10,6 +10,11 @@ import locale
 
 # Create your views here.
 
+# home 추가
+def home(request):
+    
+    return render(request, 'home.html')
+
 # excel 다운로드
 def excel_export(request):
 
