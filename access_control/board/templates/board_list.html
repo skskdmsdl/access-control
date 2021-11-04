@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
 {% block contents %}
-<a href="{% url 'excel_export' %}">Export to Excel</a>
 <div class="row mt-5">
     <div class="col-12">
         <div class="mb-5 text-md-center font-weight-bold">{{ time|date:'Y년 m월 d일' }}</div>
+        <!-- <a href="{% url 'excel_export' %}">Export to Excel</a> -->
+        <button class="btn btn-primary mb-1 float-right" onclick="location.href='/board/%5Eexport/xls/$'">엑셀 다운로드</button>
         <table class="table">
             <thead>
                 <tr>
