@@ -39,9 +39,19 @@ def excel_export(request):
     borders.bottom = 1
     style.borders = borders
 
+    # 배경 색상 설정
+    pattern = xlwt.Pattern() 
+    pattern.pattern = xlwt.Pattern.SOLID_PATTERN
+    pattern.pattern_fore_colour = 17
+    # background = xlwt.easyxf('pattern: pattern solid, fore_color light_green')
+    pattern_style = xlwt.XFStyle()
+    pattern_style.pattern = pattern
+    pattern_style.borders = borders
+
+
     #열이름을 첫번째 행에 추가 시켜준다.
     for idx, col_name in enumerate(col_names):
-    	ws.write(row_num, idx, col_name, style)
+    	ws.write(row_num, idx, col_name, pattern_style)
         
     #데이터 베이스에서 유저 정보를 불러온다.
     # rows = Board.objects.all().values_list('start_date', 'company', 'position', 'guest_name') 
