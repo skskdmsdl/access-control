@@ -9,3 +9,8 @@ Python_Personal_Project
 * Django
 * SQLite
 * PythonAnywhere
+
+# Features
+* 게시판 등록
+* 엑셀 export
+* 관리자 페이지
