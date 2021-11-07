@@ -9,7 +9,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>일시</th>
+                    <th>기간</th>
                     <th>업체명</th>
                     <th>직책</th>
                     <th>이름</th>
@@ -18,7 +18,7 @@
             <tbody>
                 {% for board in boards %}
                     {% if board.start_date|date:'Ymd' <= time|date:'Ymd' and board.end_date|date:'Ymd' >= time|date:'Ymd' %}
-                    <tr>
+                    <tr onclick="location.href='/board/detail/{{ board.id }}'">
                         <th>{{ board.start_date|date:'Y.m.d (D)' }} ~ {{ board.end_date|date:'Y.m.d (D)' }}</th>
                         <th>{{ board.company }}</th>
                         <th>{{ board.position }}</th>

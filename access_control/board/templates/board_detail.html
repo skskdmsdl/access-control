@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block contents %}
+<div class="row mt-5">
+    <div class="col-12">
+        <form method="POST" action="/board/write/">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="title">기간</label>
+                <input type="text" class="form-control" id="title" value="{{ board.start_date|date:'Y.m.d (D)' }} ~ {{ board.end_date|date:'Y.m.d (D)' }}" />
+                <label for="company">업체명</label>
+                <input type="text" class="form-control" value="{{ board.company }}" />
+                <label for="position">직책</label>
+                <input type="text" class="form-control" value="{{ board.position }}" />
+                <label for="guest_name">이름</label>
+                <input type="text" class="form-control" value="{{ board.guest_name }}" />
+            </div>
+            <button type="submit" class="btn btn-primary">등록</button>
+            <button class="btn btn-primary" onclick="location.href='/board/list/'">돌아가기</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
