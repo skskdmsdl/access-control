@@ -11,6 +11,19 @@ import locale
 
 # Create your views here.
 
+def update(request, pk):
+    if request.method == 'POST':
+        board = Board.objects.get(pk=pk)
+        board.start_date = request.POST.get('start_date')
+        board.end_date = request.POST.get('end_date')
+        board.company = request.POST.get('company')
+        board.position = request.POST.get('position')
+        board.guest_name = request.POST.get('guest_name')
+        board.save()
+        return redirect('detail', pk=pk)
+    else:
+        return redirect('detail', pk=pk)
+
 def board_detail(request, pk):
     try:
         board = Board.objects.get(pk=pk)
