@@ -3,13 +3,13 @@
 {% block contents %}
 <div class="row mt-5">
     <div class="col-12">
-        <form method="POST" action="{% url 'update' pk=board.id %}">
+        <form method="POST" action="{% url 'update' pk=board.id %}" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
                 <label for="start_date">시작일</label>
                 <input type="date" class="form-control" name="start_date" value="{{ board.start_date|date:'Y-m-d' }}" />
                 <label for="end_date">종료일</label>
-                <input type="date" class="form-control" name="end_date" value="{{ board.start_date|date:'Y-m-d' }}" />
+                <input type="date" class="form-control" name="end_date" value="{{ board.end_date|date:'Y-m-d' }}" />
                 <label for="company">업체명</label>
                 <input type="text" class="form-control" name="company" value="{{ board.company }}" />
                 <label for="position">직책</label>
@@ -18,7 +18,7 @@
                 <input type="text" class="form-control" name="guest_name" value="{{ board.guest_name }}" />
             </div>
             <button type="submit" class="btn btn-primary">수정</button>
-            <button class="btn btn-primary" onclick="location.href='/board/list/'">돌아가기</button> 
+            <button type="button" class="btn btn-primary" onclick="location.href='/board/list/'">돌아가기</button> 
         </form>
     </div>
 </div>

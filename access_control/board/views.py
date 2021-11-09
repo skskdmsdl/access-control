@@ -12,17 +12,20 @@ import locale
 # Create your views here.
 
 def update(request, pk):
+    board = Board.objects.get(pk=pk)
     if request.method == 'POST':
-        board = Board.objects.get(pk=pk)
-        board.start_date = request.POST.get('start_date')
-        board.end_date = request.POST.get('end_date')
-        board.company = request.POST.get('company')
-        board.position = request.POST.get('position')
-        board.guest_name = request.POST.get('guest_name')
-        board.save()
-        return redirect('detail', pk=pk)
+        form = BoardForm(request.POST, request.FILES)
+        if form.is_valid():
+            print(form.cleaned_data)
+            board.start_date = form.cleaned_data['start_date']
+            board.end_date = form.cleaned_data['end_date']
+            board.company = form.cleaned_data['company']
+            board.position = form.cleaned_data['position']
+            board.guest_name = form.cleaned_data['guest_name']
+            board.save()
+            return redirect('/board/detail/'+str(pk))
     else:
-        return redirect('detail', pk=pk)
+        return redirect('/board/detail/'+str(pk))
 
 def board_detail(request, pk):
     try:
