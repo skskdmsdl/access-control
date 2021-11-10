@@ -52,8 +52,15 @@ def excel_export(request):
     wb = xlwt.Workbook(encoding='ansi') #encoding은 ansi로 해준다.
     ws = wb.add_sheet('출입 신청', cell_overwrite_ok=True) #시트 추가 및 overwrite true 설정
     
-    row_num = 0
-    col_names = ['번호', '날짜', '업체명', '직책', '이름']
+    # 첫번째 줄 추가
+    col_names = ['스마트 전자도서관시스템, 국회부산도서관 홈페이지 및 국회〮지방의회 의정정보시스템 개발사업 출입 신청']
+
+    for idx, col_name in enumerate(col_names):
+    	ws.write_merge(0, 0, 0, 5, col_name)
+
+    # 두번째 줄 추가
+    row_num = 1
+    col_names = ['번호', '기간', '업체명', '직급', '성명', '비고']
     
     # 테두리 설정
     style = xlwt.XFStyle()
@@ -67,7 +74,7 @@ def excel_export(request):
     # 배경 색상 설정
     pattern = xlwt.Pattern() 
     pattern.pattern = xlwt.Pattern.SOLID_PATTERN
-    pattern.pattern_fore_colour = 17
+    pattern.pattern_fore_colour = 22
     # background = xlwt.easyxf('pattern: pattern solid, fore_color light_green')
     pattern_style = xlwt.XFStyle()
     pattern_style.pattern = pattern
@@ -80,7 +87,7 @@ def excel_export(request):
         
     #데이터 베이스에서 유저 정보를 불러온다.
     # rows = Board.objects.all().values_list('start_date', 'company', 'position', 'guest_name') 
-    rows = Board.objects.filter(start_date__gte = today, end_date__lte = today).values_list('start_date', 'start_date', 'company', 'position', 'guest_name')
+    rows = Board.objects.filter(start_date__lte = today, end_date__gte = today).values_list('start_date', 'end_date', 'company', 'position', 'guest_name', 'guest_name')
     
     # 날짜 서식으로 변경
     date_format = xlwt.XFStyle()
@@ -92,8 +99,9 @@ def excel_export(request):
         row_num +=1
         for col_num in range(len(row)):
             ws.write(row_num, col_num, row[col_num], style)
-            ws.write(row_num, 0, row_num, style)
+            ws.write(row_num, 0, row_num-1, style)
             ws.write(row_num, 1, todayValue, date_format)
+            ws.write(row_num, 5, '', style)
             ws.col(1).width = 25*255
             
     wb.save(response)
