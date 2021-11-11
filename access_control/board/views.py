@@ -51,16 +51,27 @@ def excel_export(request):
     response["Content-Disposition"] = 'attachment;filename*=UTF-8\'\'example.xls' 
     wb = xlwt.Workbook(encoding='ansi') #encoding은 ansi로 해준다.
     ws = wb.add_sheet('출입 신청', cell_overwrite_ok=True) #시트 추가 및 overwrite true 설정
+
+    # 스타일 추가
+    style = xlwt.XFStyle()
+    alignment = xlwt.Alignment()
+    alignment.horz = xlwt.Alignment.HORZ_CENTER
+    style.alignment = alignment
+    font = xlwt.Font()
+    font.bold = True
+    style.font = font
     
     # 첫번째 줄 추가
     col_names = ['스마트 전자도서관시스템, 국회부산도서관 홈페이지 및 국회〮지방의회 의정정보시스템 개발사업 출입 신청']
 
     for idx, col_name in enumerate(col_names):
-    	ws.write_merge(0, 0, 0, 5, col_name)
+        ws.write_merge(0, 0, 0, 5, col_name, style)
+        # new_row_height = int(1000)
+        # ws.row(0).height = new_row_height
 
     # 두번째 줄 추가
     row_num = 1
-    col_names = ['번호', '기간', '업체명', '직급', '성명', '비고']
+    col_names = ['순번', '기간', '업체명', '직급', '성명', '비고']
     
     # 테두리 설정
     style = xlwt.XFStyle()
@@ -79,9 +90,14 @@ def excel_export(request):
     pattern_style = xlwt.XFStyle()
     pattern_style.pattern = pattern
     pattern_style.borders = borders
+    alignment = xlwt.Alignment()
+    alignment.horz = xlwt.Alignment.HORZ_CENTER
+    pattern_style.alignment = alignment
+    
+    # alignment.horzXlwt.Alignment.HORZ_CENTER
 
 
-    #열이름을 첫번째 행에 추가 시켜준다.
+    #열이름을 두번째 행에 추가 시켜준다.
     for idx, col_name in enumerate(col_names):
     	ws.write(row_num, idx, col_name, pattern_style)
         
@@ -101,8 +117,14 @@ def excel_export(request):
             ws.write(row_num, col_num, row[col_num], style)
             ws.write(row_num, 0, row_num-1, style)
             ws.write(row_num, 1, todayValue, date_format)
+            # ws.write(row_num, 1, todayValue, date_format)
             ws.write(row_num, 5, '', style)
-            ws.col(1).width = 25*255
+            ws.col(1).width = 20*255
+            ws.col(2).width = 20*255
+            ws.col(3).width = 15*255
+            ws.col(4).width = 15*255
+            ws.col(5).width = 20*255
+            
             
     wb.save(response)
     
