@@ -5,12 +5,13 @@ Python_Personal_Project
 출입 인원 관리를 위한 간단한 사이트 구축
 
 # Skills
+* HTML
 * Python
 * Django
 * SQLite
 * PythonAnywhere
 
 # Features
-* 게시판 등록
+* 게시판 등록/수정
 * 엑셀 export
 * 관리자 페이지
