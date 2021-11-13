@@ -8,6 +8,8 @@ from django.http import Http404
 
 import xlwt
 import locale
+import xlsxwriter
+
 
 # Create your views here.
 
@@ -51,6 +53,7 @@ def excel_export(request):
     response["Content-Disposition"] = 'attachment;filename*=UTF-8\'\'example.xls' 
     wb = xlwt.Workbook(encoding='ansi') #encoding은 ansi로 해준다.
     ws = wb.add_sheet('출입 신청', cell_overwrite_ok=True) #시트 추가 및 overwrite true 설정
+    ws.col(0).width = 256 * 25
 
     # 스타일 추가
     style = xlwt.XFStyle()
@@ -68,6 +71,7 @@ def excel_export(request):
         ws.write_merge(0, 0, 0, 5, col_name, style)
         # new_row_height = int(1000)
         # ws.row(0).height = new_row_height
+        
 
     # 두번째 줄 추가
     row_num = 1
@@ -81,6 +85,9 @@ def excel_export(request):
     borders.top = 1
     borders.bottom = 1
     style.borders = borders
+    alignment = xlwt.Alignment()
+    alignment.horz = xlwt.Alignment.HORZ_CENTER
+    style.alignment = alignment
 
     # 배경 색상 설정
     pattern = xlwt.Pattern() 
@@ -93,9 +100,6 @@ def excel_export(request):
     alignment = xlwt.Alignment()
     alignment.horz = xlwt.Alignment.HORZ_CENTER
     pattern_style.alignment = alignment
-    
-    # alignment.horzXlwt.Alignment.HORZ_CENTER
-
 
     #열이름을 두번째 행에 추가 시켜준다.
     for idx, col_name in enumerate(col_names):
@@ -109,6 +113,9 @@ def excel_export(request):
     date_format = xlwt.XFStyle()
     date_format.borders = borders
     date_format.num_format_str = 'yyyy-mm-dd (aaa)'
+    alignment = xlwt.Alignment()
+    alignment.horz = xlwt.Alignment.HORZ_CENTER
+    date_format.alignment = alignment
 
     #유저정보를 한줄씩 작성한다.
     for row in rows:
