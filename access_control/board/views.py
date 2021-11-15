@@ -52,7 +52,7 @@ def home(request):
 #     todayValue = datetime.today().strftime('%Y-%m-%d (%a)')
 	
 #     response = HttpResponse(content_type="application/vnd.ms-excel")
-#     response["Content-Disposition"] = 'attachment;filename*=UTF-8\'\'출입신청.xls' 
+#     response["Content-Disposition"] = 'attachment;filename*=UTF-8\'\'example.xls'
 #     wb = xlwt.Workbook(encoding='ansi') #encoding은 ansi로 해준다.
 #     ws = wb.add_sheet('출입 신청', cell_overwrite_ok=True) #시트 추가 및 overwrite true 설정
 #     ws.col(0).width = 256 * 25
@@ -155,9 +155,11 @@ def excel_export(request):
     # 'in_memory' Workbook() constructor option as shown in the docs.
     workbook = xlsxwriter.Workbook(output)
     worksheet = workbook.add_worksheet()
+    todayfilter = datetime.today().strftime('%Y-%m-%d')
 
     # Get some data to write to the spreadsheet.
-    data = get_simple_table_data()
+    # data = get_simple_table_data()
+    data = Board.objects.filter(start_date__lte = todayfilter, end_date__gte = todayfilter).values_list('start_date', 'end_date', 'company', 'position', 'guest_name', 'guest_name')
 
     # Write some test data.
     for row_num, columns in enumerate(data):
