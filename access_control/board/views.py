@@ -157,6 +157,19 @@ def excel_export(request):
     worksheet = workbook.add_worksheet()
     todayfilter = datetime.today().strftime('%Y-%m-%d')
 
+    col_names = '스마트 전자도서관시스템, 국회부산도서관 홈페이지 및 국회〮지방의회 의정정보시스템 개발사업 출입 신청'
+
+    worksheet.set_column('A:F', 12)
+    worksheet.set_row(0, 30)
+
+    merge_format = workbook.add_format({
+    'bold': 1,
+    'border': 1,
+    'align': 'center',
+    'valign': 'vcenter'})
+
+    worksheet.merge_range('A1:F1', col_names, merge_format)
+
     # Get some data to write to the spreadsheet.
     # data = get_simple_table_data()
     data = Board.objects.filter(start_date__lte = todayfilter, end_date__gte = todayfilter).values_list('start_date', 'end_date', 'company', 'position', 'guest_name', 'guest_name')
@@ -164,7 +177,7 @@ def excel_export(request):
     # Write some test data.
     for row_num, columns in enumerate(data):
         for col_num, cell_data in enumerate(columns):
-            worksheet.write(row_num, col_num, cell_data)
+            worksheet.write(row_num+1, col_num, cell_data)
 
     # Close the workbook before sending the data.
     workbook.close()
