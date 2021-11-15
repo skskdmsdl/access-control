@@ -157,10 +157,10 @@ def excel_export(request):
     worksheet = workbook.add_worksheet()
     todayfilter = datetime.today().strftime('%Y-%m-%d')
 
-    col_names = '스마트 전자도서관시스템, 국회부산도서관 홈페이지 및 국회〮지방의회 의정정보시스템 개발사업 출입 신청'
+    title = '스마트 전자도서관시스템, 국회부산도서관 홈페이지 및 국회〮지방의회 의정정보시스템 개발사업 출입 신청'
 
     worksheet.set_column('A:F', 12)
-    worksheet.set_row(0, 30)
+    worksheet.set_row(0, 57)
 
     merge_format = workbook.add_format({
     'bold': 1,
@@ -168,7 +168,13 @@ def excel_export(request):
     'align': 'center',
     'valign': 'vcenter'})
 
-    worksheet.merge_range('A1:F1', col_names, merge_format)
+    worksheet.merge_range('A1:F1', title, merge_format)
+
+    # 
+    row_num = 1
+    col_names = ['순번', '기간', '업체명', '직급', '성명', '비고']
+    for idx, col_name in enumerate(col_names):
+     	worksheet.write(row_num, idx, col_name)
 
     # Get some data to write to the spreadsheet.
     # data = get_simple_table_data()
@@ -177,7 +183,8 @@ def excel_export(request):
     # Write some test data.
     for row_num, columns in enumerate(data):
         for col_num, cell_data in enumerate(columns):
-            worksheet.write(row_num+1, col_num, cell_data)
+            worksheet.write(row_num+2, col_num, cell_data)
+            worksheet.write(row_num+2, 0, row_num+1)
 
     # Close the workbook before sending the data.
     workbook.close()
