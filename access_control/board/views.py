@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from datetime import datetime
 from django.http import Http404
 from urllib.parse import quote
+from datetime import timedelta
 
 import io
 import xlwt
@@ -155,12 +156,13 @@ def excel_export(request):
     # 'in_memory' Workbook() constructor option as shown in the docs.
     workbook = xlsxwriter.Workbook(output)
     worksheet = workbook.add_worksheet()
-    todayfilter = datetime.today().strftime('%Y-%m-%d')
-
-    title = '스마트 전자도서관시스템, 국회부산도서관 홈페이지 및 국회〮지방의회 의정정보시스템 개발사업 출입 신청'
+    tomorrow = datetime.today() + timedelta(days=1)
+    tomorrowfilter = tomorrow.strftime('%Y-%m-%d')
+    
+    title = '스마트 전자도서관시스템, 국회부산도서관 홈페이지 및 국회지〮방의회 의정정보시스템 개발사업 출입 신청'
 
     worksheet.set_column('A:F', 12)
-    worksheet.set_row(0, 57)
+    worksheet.set_row(0, 57) # 행 너비 조절
 
     merge_format = workbook.add_format({
     'bold': 1,
@@ -170,21 +172,56 @@ def excel_export(request):
 
     worksheet.merge_range('A1:F1', title, merge_format)
 
-    # 
+
+    # 헤더 생성
     row_num = 1
     col_names = ['순번', '기간', '업체명', '직급', '성명', '비고']
+
+    # 헤더 스타일 설정
+    header_format = workbook.add_format({
+    'border': 1,
+    'align': 'center'})
+
+    header_format.set_bg_color('#D9E1F2')
+
     for idx, col_name in enumerate(col_names):
-     	worksheet.write(row_num, idx, col_name)
+     	worksheet.write(row_num, idx, col_name, header_format)
+
 
     # Get some data to write to the spreadsheet.
     # data = get_simple_table_data()
-    data = Board.objects.filter(start_date__lte = todayfilter, end_date__gte = todayfilter).values_list('start_date', 'end_date', 'company', 'position', 'guest_name', 'guest_name')
+    data = Board.objects.filter(start_date__lte = tomorrowfilter, end_date__gte = tomorrowfilter).values_list('start_date', 'end_date', 'company', 'position', 'guest_name', 'guest_name')
+
+    # 날짜 포맷 변경
+    date_format = workbook.add_format({
+    'num_format': '~ yyyy-mm-dd (aaa)',
+    'border': 1,
+    'align': 'center'
+    })
+
+    # 순번 스타일 설정
+    num_format = workbook.add_format({
+    'border': 1,
+    'align': 'right'})
+
+    # 비고
+    remark_format = workbook.add_format({'border': 1})
 
     # Write some test data.
     for row_num, columns in enumerate(data):
         for col_num, cell_data in enumerate(columns):
-            worksheet.write(row_num+2, col_num, cell_data)
-            worksheet.write(row_num+2, 0, row_num+1)
+            worksheet.write(row_num+2, col_num, cell_data, date_format)
+            #worksheet.write(row_num+2, 1, cell_data, date_format)
+            worksheet.write(row_num+2, 0, row_num+1, num_format)
+            worksheet.write(row_num+2, 5, '', remark_format)
+            worksheet.set_column('A:A', 5.63)
+            worksheet.set_column('B:B', 16)
+            worksheet.set_column('C:C', 18.88)
+            worksheet.set_column('D:D', 11.63)
+            worksheet.set_column('E:E', 15.25)
+            worksheet.set_column('F:F', 19.13)
+
+           
 
     # Close the workbook before sending the data.
     workbook.close()
