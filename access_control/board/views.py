@@ -69,6 +69,11 @@ def update(request, pk):
     else:
         return redirect('/board/detail/'+str(pk))
 
+def delete(request, pk):
+    board = Board.objects.get(pk=pk)
+    board.delete()
+    return redirect('/board/list/')
+
 
 def excel_export(request):
     # Create an in-memory output file for the new workbook.

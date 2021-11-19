@@ -5,11 +5,12 @@
     <div class="col-12">
         <div class="mb-5 text-md-center font-weight-bold">{{ time|date:'Y년 m월 d일' }}</div>
         <!-- <a href="{% url 'excel_export' %}">Export to Excel</a> -->
-        <button class="btn btn-primary mb-2 float-right" onclick="location.href='/board/%5Eexport/xls/$'">엑셀 다운로드</button>
+        <button class="btn btn-primary mb-2 ml-2 float-right" onclick="location.href='/board/%5Eexport/xls/$'">엑셀 다운로드</button>
+        <button class="btn btn-primary mb-2 float-right" onclick="location.href='/board/detail/{{ board.id }}/delete'">선택삭제</button>
         <table class="table">
             <thead>
                 <tr>
-                    <th><input type="checkbox" name="_selected_all_"></th>
+                    <th><input type="checkbox" name="selected_all"></th>
                     <th>기간</th>
                     <th>업체명</th>
                     <th>직책</th>
@@ -20,11 +21,13 @@
                 {% for board in boards %}
                     {% if board.start_date|date:'Ymd' <= time|date:'Ymd' and board.end_date|date:'Ymd' >= time|date:'Ymd' %}
                     <tr onclick="location.href='/board/detail/{{ board.id }}'" style="cursor: pointer;">
-                        <td><input type="checkbox" name="_selected_" value="ROW_1"></td>
+                        <td onclick="event.cancelBubble=true" style="cursor: default;">
+                            <input type="checkbox" name="selected" value="{{board.pk}}" />
+                        </td>
                         <td>{{ board.start_date|date:'Y.m.d (D)' }} ~ {{ board.end_date|date:'Y.m.d (D)' }}</td>
                         <td>{{ board.company }}</td>
                         <td>{{ board.position }}</td>
-                        <td>{{ board.guest_name }}</td>
+                        <td>{{ board.guest_name }}</td>                        
                     </tr>
                     {% endif %}
                 {% endfor %}
@@ -40,11 +43,22 @@
 
 <script>
     // 전체선택 및 해제 기능
-    $('input[name=_selected_all_]').on('change', function(){
-        $('input[name=_selected_]').prop('checked', this.checked);
+    $('input[name=selected_all]').on('change', function(){
+        $('input[name=selected]').prop('checked', this.checked);
+    });
+    $('input[name=selected]').on('change', function(){
+        $('input[name=selected_all]').prop('checked', this.checked);
+        if($('input[name=selected]:checked').length==$('input[name=selected]').length){
+            $('input[name=selected_all]').prop('checked',true);
+        }else{
+            $('input[name=selected_all]').prop('checked',false);
+        }
     });
 
+    // 선택한 Checkbox 값 가져오기
+    let arr = $('input[name=selected]:checked').serializeArray().map(function(item) { return item.value });
 
+    //let str = $('input[name=selected]:checked').serialize(); // QueryString 방식 
 </script>
 
 <!-- <script>
