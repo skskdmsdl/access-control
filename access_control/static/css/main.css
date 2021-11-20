@@ -546,13 +546,12 @@ fieldset {
   border: none;
 }
 
-input[type="email"],
 input[type="number"],
 input[type="search"],
 input[type="text"],
 input[type="tel"],
 input[type="url"],
-input[type="password"],
+input[type="date"],
 textarea,
 select {
   display: block;
@@ -623,13 +622,12 @@ textarea {
   min-height: 25rem;
 }
 
-input[type="email"]:focus,
 input[type="number"]:focus,
 input[type="search"]:focus,
 input[type="text"]:focus,
 input[type="tel"]:focus,
 input[type="url"]:focus,
-input[type="password"]:focus,
+input[type="date"]:focus,
 textarea:focus,
 select:focus {
   color: #000000;
@@ -646,6 +644,7 @@ label, legend {
 input[type="checkbox"],
 input[type="radio"] {
   display: inline;
+  margin-block: auto;
 }
 
 label > .label-text {
@@ -2617,8 +2616,7 @@ html[data-useragent*='MSIE 10.0'] .scrolldown,
 }
 
 #contact input[type="text"],
-#contact input[type="password"],
-#contact input[type="email"],
+#contact input[type="date"],
 #contact textarea {
   width: 100%;
   color: rgba(255, 255, 255, 0.6);
@@ -2627,8 +2625,7 @@ html[data-useragent*='MSIE 10.0'] .scrolldown,
 }
 
 #contact input[type="text"]:focus,
-#contact input[type="password"]:focus,
-#contact input[type="email"]:focus {
+#contact input[type="date"]:focus {
   color: #FFFFFF;
 }
 
@@ -2993,4 +2990,11 @@ footer h4.h05::after {
   .footer-bottom .copyright span::after {
     display: none;
   }
+}
+/* ------------------------------------------------------------------- 
+ * responsive:
+ * input box
+ * ------------------------------------------------------------------- */
+ .input-box {
+  width: 100%;
 }

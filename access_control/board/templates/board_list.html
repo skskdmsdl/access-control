@@ -22,7 +22,7 @@
    <header> 
 
    	<div class="header-logo">
-	      <a href="#">Infinity</a>
+	      <a href="">Infinity</a>
 	   </div> 
 
 		<a id="header-menu-trigger" href="#0">
@@ -37,17 +37,11 @@
 	   	<h3>출입신청</h3>  
 
 			<ul class="nav-list">
-				<li class="current"><a class="smoothscroll" href="#home" title="">인덱스</a></li>
+				<li class="current"><a class="smoothscroll" href="#home" title="">홈</a></li>
 				<li><a class="smoothscroll" href="#about" title="">신청목록</a></li>
-				<li><a class="smoothscroll" href="#admin" title="">관리자</a></li>					
-			</ul>	
-
-			<p class="sponsor-text">
-				Looking for an awesome and reliable webhosting? Try <a href="http://www.dreamhost.com/r.cgi?287326|STYLESHOUT">DreamHost</a>.
-				Get <span>$50 off</span> when you sign up with the promocode <span>styleshout</span>. 
-				<!-- Simply type	the promocode in the box labeled “Promo Code” when placing your order. -->
-			</p>			
-
+				<li><a href="/admin" title="">관리자</a></li>					
+            </ul>	
+            
 		</nav>  <!-- end #menu-nav-wrap -->
 
 	</header> <!-- end header -->  
@@ -72,7 +66,7 @@
 
 				  			<div class="more animate-intro">
 				  				<a class="smoothscroll button stroke" href="#about">
-				  					Learn More
+				  					Access List
 				  				</a>
 				  			</div>							
 
@@ -104,8 +98,8 @@
                         <h3 class="animate-this">{{ time|date:'Y년 m월 d일' }}</h3>
                             <form name='deleteForm' action="/board/delete/" method="POST">
                                 {% csrf_token %}
-                                <button class="btn btn-primary mb-2 ml-2 float-right" onclick="location.href='/board/%5Eexport/xls/$'">엑셀 다운로드</button>
-                                <input type="button" class="btn btn-primary mb-2 float-right" value="선택삭제" onclick="infoDelete();">
+                                <input type="button" class="right-btn" value="엑셀 다운로드" onclick="location.href='/board/%5Eexport/xls/$'" />
+                                <input type="button" class="right-btn" value="선택삭제" onclick="infoDelete();" />
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -137,7 +131,7 @@
 
                         <div class="row">
                             <div class="col-12">
-                                <button class="btn btn-primary" onclick="location.href='/board/write/'">등록</button>
+                                <button onclick="location.href='/board/write/'">등록</button>
                             </div>
                         </div>
                     </div>   
@@ -201,7 +195,7 @@
         function infoDelete(){
             // 선택한 Checkbox 값 가져오기
             let checkValue = $("input[name='selected]']:checked").val();
-            if(checkValue == ""){
+            if(checkValue == undefined){
                 alert("삭제할 행을 선택하세요.")
                 return false;
             }

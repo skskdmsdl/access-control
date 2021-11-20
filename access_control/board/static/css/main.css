@@ -103,7 +103,7 @@ h1, h2, h3, h4, h5, h6,
 }
 
 h3, .h03, h4, .h04 {
-  margin-bottom: 1.8rem;
+  margin-bottom: 5rem;
 }
 
 h5, .h05, h6, .h06 {
@@ -421,7 +421,7 @@ table {
   border-width: 0;
   width: 100%;
   max-width: 100%;
-  font-family: "librebaskerville-regular", sans-serif;
+  font-family: sans-serif;
 }
 
 th,
@@ -433,7 +433,7 @@ td {
 
 th {
   color: #151515;
-  font-family: "montserrat-bold", sans-serif;
+  font-family: sans-serif;
 }
 
 td {
@@ -546,13 +546,12 @@ fieldset {
   border: none;
 }
 
-input[type="email"],
 input[type="number"],
 input[type="search"],
 input[type="text"],
 input[type="tel"],
 input[type="url"],
-input[type="password"],
+input[type="date"],
 textarea,
 select {
   display: block;
@@ -572,6 +571,12 @@ select {
   -webkit-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
+}
+
+#contact .input-box input[type="text"],
+#contact .input-box input[type="date"] {
+  height: auto;
+  padding: .5rem 2rem;
 }
 
 .ss-custom-select {
@@ -623,13 +628,12 @@ textarea {
   min-height: 25rem;
 }
 
-input[type="email"]:focus,
 input[type="number"]:focus,
 input[type="search"]:focus,
 input[type="text"]:focus,
 input[type="tel"]:focus,
 input[type="url"]:focus,
-input[type="password"]:focus,
+input[type="date"]:focus,
 textarea:focus,
 select:focus {
   color: #000000;
@@ -646,6 +650,7 @@ label, legend {
 input[type="checkbox"],
 input[type="radio"] {
   display: inline;
+  margin-block: auto;
 }
 
 label > .label-text {
@@ -717,21 +722,22 @@ input[type="submit"],
 input[type="reset"],
 input[type="button"] {
   display: inline-block;
-  font-family: "montserrat-bold", sans-serif;
+  font-family: sans-serif;
   font-size: 1.4rem;
   text-transform: uppercase;
   letter-spacing: .3rem;
   height: 5.4rem;
   line-height: 5.4rem;
   padding: 0 3rem;
-  margin: 0 .3rem 1.2rem 0;
+  margin: 0 1rem 1.2rem 0;
   background: #A5A5A5;
-  color: #222222;
+  color: #fff;
   text-decoration: none;
   cursor: pointer;
   text-align: center;
   white-space: nowrap;
   border: none;
+  border-radius: 2px;
   -moz-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
@@ -821,6 +827,9 @@ input::-moz-focus-inner {
   padding: 0;
 }
 
+.right-btn {
+  float: right;
+}
 
 /* ===================================================================
  *  07. other components - (_others.scss)
@@ -1298,6 +1307,7 @@ header .header-logo a {
 }
 #header-menu-trigger.opaque {
   background-color: #000000;
+  border-radius: 0 3px 3px 0;
 }
 #header-menu-trigger.opaque .header-menu-text {
   background-color: #000000;
@@ -1312,6 +1322,7 @@ header .header-logo a {
   left: -75px;
   width: 75px;
   text-align: center;
+  border-radius: 3px 0 0 3px;
   background-color: transparent;
   -moz-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
@@ -2508,9 +2519,6 @@ html[data-useragent*='MSIE 10.0'] .scrolldown,
  *
  * ------------------------------------------------------------------- */
 #contact {
-  background-color: #111111;
-  background-image: url(../images/contact-bg.jpg);
-  background-repeat: no-repeat;
   background-position: center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -2575,28 +2583,18 @@ html[data-useragent*='MSIE 10.0'] .scrolldown,
 }
 #contact form .form-field label {
   font-family: "montserrat-bold", sans-serif;
-  font-size: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
   line-height: 1.4;
-  position: absolute;
   bottom: 1.5rem;
   right: 0;
   text-transform: uppercase;
   letter-spacing: .05rem;
-  padding: .6rem 2rem .6rem 2rem;
+  padding: .2rem 2rem .2rem 2rem;
   margin: 0;
-  color: #000000;
+  color: #fff;
   background: #f9a828;
   border-radius: 3px;
-}
-#contact form .form-field label::after {
-  position: absolute;
-  right: 15px;
-  top: 1px;
-  margin-top: -6px;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-bottom: 5px solid #f9a828;
-  content: "";
 }
 #contact form ::-webkit-input-placeholder {
   color: rgba(255, 255, 255, 0.3);
@@ -2617,8 +2615,7 @@ html[data-useragent*='MSIE 10.0'] .scrolldown,
 }
 
 #contact input[type="text"],
-#contact input[type="password"],
-#contact input[type="email"],
+#contact input[type="date"],
 #contact textarea {
   width: 100%;
   color: rgba(255, 255, 255, 0.6);
@@ -2627,8 +2624,7 @@ html[data-useragent*='MSIE 10.0'] .scrolldown,
 }
 
 #contact input[type="text"]:focus,
-#contact input[type="password"]:focus,
-#contact input[type="email"]:focus {
+#contact input[type="date"]:focus {
   color: #FFFFFF;
 }
 
@@ -2925,6 +2921,7 @@ footer h4.h05::after {
 #go-top a {
   text-decoration: none;
   border: 0 none;
+  border-radius: 2px;
   display: block;
   height: 63px;
   width: 60px;
