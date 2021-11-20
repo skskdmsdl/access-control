@@ -1,93 +1,219 @@
 {% extends "base.html" %}
 
 {% block contents %}
+<!-- <div class="row mt-5">
+    <div class="col-12 text-center">
+        <h1>홈페이지</h1>
+    </div>
+</div>
 <div class="row mt-5">
-    <div class="col-12">
-        <div class="mb-5 text-md-center font-weight-bold">{{ time|date:'Y년 m월 d일' }}</div>
-        <!-- <a href="{% url 'excel_export' %}">Export to Excel</a> -->
-        <form name='deleteForm' action="/board/delete/" method="POST">
-            {% csrf_token %}
-            <button class="btn btn-primary mb-2 ml-2 float-right" onclick="location.href='/board/%5Eexport/xls/$'">엑셀 다운로드</button>
-            <!-- <button class="btn btn-primary mb-2 float-right" onclick="infoDelete();">선택삭제</button> -->
-            <input type="button" class="btn btn-primary mb-2 float-right" value="선택삭제" onclick="infoDelete();">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th><input type="checkbox" name="selected_all"></th>
-                        <th>기간</th>
-                        <th>업체명</th>
-                        <th>직책</th>
-                        <th>이름</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for board in boards %}
-                        {% if board.start_date|date:'Ymd' <= time|date:'Ymd' and board.end_date|date:'Ymd' >= time|date:'Ymd' %}
-                        <tr onclick="location.href='/board/detail/{{ board.id }}'" style="cursor: pointer;">
-                            <td onclick="event.cancelBubble=true" style="cursor: default;">
-                                <input type="checkbox" name="selected" value="{{board.pk}}"/>
-                            </td>
-                            <td>{{ board.start_date|date:'Y.m.d (D)' }} ~ {{ board.end_date|date:'Y.m.d (D)' }}</td>
-                            <td>{{ board.company }}</td>
-                            <td>{{ board.position }}</td>
-                            <td>{{ board.guest_name }}</td>                        
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                </tbody>
-            </table>
-        </form>
+    <div class="col-6">
+        <button class="btn btn-primary btn-block" onclick="location.href='/admin'">관리 페이지</button>  
     </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <button class="btn btn-primary" onclick="location.href='/board/write/'">등록</button>
+    <div class="col-6">
+        <button class="btn btn-primary btn-block" onclick="location.href='/board/list/'">파일 보기</button>  
     </div>
-</div>
+</div> -->
 
-<script>
-    // 전체선택 및 해제 기능
-    $('input[name=selected_all]').on('change', function(){
-        $('input[name=selected]').prop('checked', this.checked);
-    });
-    $('input[name=selected]').on('change', function(){
-        $('input[name=selected_all]').prop('checked', this.checked);
-        if($('input[name=selected]:checked').length==$('input[name=selected]').length){
-            $('input[name=selected_all]').prop('checked',true);
-        }else{
-            $('input[name=selected_all]').prop('checked',false);
+
+
+	<!-- header 
+   ================================================== -->
+   <header> 
+
+   	<div class="header-logo">
+	      <a href="#">Infinity</a>
+	   </div> 
+
+		<a id="header-menu-trigger" href="#0">
+		 	<span class="header-menu-text">Menu</span>
+		  	<span class="header-menu-icon"></span>
+		</a> 
+
+		<nav id="menu-nav-wrap">
+
+			<a href="#0" class="close-button" title="close"><span>Close</span></a>	
+
+	   	<h3>출입신청</h3>  
+
+			<ul class="nav-list">
+				<li class="current"><a class="smoothscroll" href="#home" title="">인덱스</a></li>
+				<li><a class="smoothscroll" href="#about" title="">신청목록</a></li>
+				<li><a class="smoothscroll" href="#admin" title="">관리자</a></li>					
+			</ul>	
+
+			<p class="sponsor-text">
+				Looking for an awesome and reliable webhosting? Try <a href="http://www.dreamhost.com/r.cgi?287326|STYLESHOUT">DreamHost</a>.
+				Get <span>$50 off</span> when you sign up with the promocode <span>styleshout</span>. 
+				<!-- Simply type	the promocode in the box labeled “Promo Code” when placing your order. -->
+			</p>			
+
+		</nav>  <!-- end #menu-nav-wrap -->
+
+	</header> <!-- end header -->  
+
+
+   <!-- home
+   ================================================== -->
+   <section id="home">
+
+   	<div class="overlay"></div>
+
+   	<div class="home-content-table">	
+		   <div class="home-content-tablecell">
+		   	<div class="row">
+		   		<div class="col-twelve">		   			
+			  		
+			  				<h3 class="animate-intro">전자도서관</h3>
+				  			<h1 class="animate-intro">
+							출입신청  <br>
+							관리 사이트
+				  			</h1>	
+
+				  			<div class="more animate-intro">
+				  				<a class="smoothscroll button stroke" href="#about">
+				  					Learn More
+				  				</a>
+				  			</div>							
+
+			  		</div> <!-- end col-twelve --> 
+		   	</div> <!-- end row --> 
+		   </div> <!-- end home-content-tablecell --> 		   
+		</div> <!-- end home-content-table -->
+
+		<div class="scrolldown">
+			<a href="#about" class="scroll-icon smoothscroll">		
+		   	Scroll Down		   	
+		   	<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+			</a>
+		</div>			
+   
+   </section> <!-- end home -->
+
+
+   <!-- board_list
+    ================================================== -->
+    <section id="about">
+
+        <div class="row about-wrap">
+            <div class="col-full">
+
+                <div class="about-profile-bg"></div>
+
+                    <div class="intro">
+                        <h3 class="animate-this">{{ time|date:'Y년 m월 d일' }}</h3>
+                            <form name='deleteForm' action="/board/delete/" method="POST">
+                                {% csrf_token %}
+                                <button class="btn btn-primary mb-2 ml-2 float-right" onclick="location.href='/board/%5Eexport/xls/$'">엑셀 다운로드</button>
+                                <input type="button" class="btn btn-primary mb-2 float-right" value="선택삭제" onclick="infoDelete();">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" name="selected_all"></th>
+                                            <th>기간</th>
+                                            <th>업체명</th>
+                                            <th>직책</th>
+                                            <th>이름</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for board in boards %}
+                                            {% if board.start_date|date:'Ymd' <= time|date:'Ymd' and board.end_date|date:'Ymd' >= time|date:'Ymd' %}
+                                            <tr onclick="location.href='/board/detail/{{ board.id }}'" style="cursor: pointer;">
+                                                <td onclick="event.cancelBubble=true" style="cursor: default;">
+                                                    <input type="checkbox" name="selected" value="{{board.pk}}"/>
+                                                </td>
+                                                <td>{{ board.start_date|date:'Y.m.d (D)' }} ~ {{ board.end_date|date:'Y.m.d (D)' }}</td>
+                                                <td>{{ board.company }}</td>
+                                                <td>{{ board.position }}</td>
+                                                <td>{{ board.guest_name }}</td>                        
+                                            </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </form>
+                        
+
+                        <div class="row">
+                            <div class="col-12">
+                                <button class="btn btn-primary" onclick="location.href='/board/write/'">등록</button>
+                            </div>
+                        </div>
+                    </div>   
+
+            </div> <!-- end col-full  -->
+        </div> <!-- end about-wrap  -->
+
+    </section> <!-- end about -->
+
+
+	<!-- footer
+   ================================================== -->
+	<footer>
+   	 <div class="footer-bottom">
+
+      	<div class="row">
+
+      		<div class="col-twelve">
+	      		<div class="copyright">
+		         	<span>© Copyright Infinity 2021.</span> 
+		         	<span>Design by <a href="https://github.com/skskdmsdl">jei</a></span>		         	
+		         </div>		               
+	      	</div>
+
+      	</div>   	
+
+      </div> <!-- end footer-bottom -->
+
+      <div id="go-top">
+		   <a class="smoothscroll" title="Back to Top" href="#top">
+		   	<i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+		   </a>
+		</div>		
+   </footer>
+
+   <div id="preloader"> 
+    	<div id="loader"></div>
+   </div> 
+
+   <!-- Java Script
+   ================================================== --> 
+   <script src="/static/js/jquery-2.1.3.min.js"></script>
+   <script src="/static/js/plugins.js"></script>
+   <script src="/static/js/main.js"></script>
+   
+    <script>
+        // 전체선택 및 해제 기능
+        $('input[name=selected_all]').on('change', function(){
+            $('input[name=selected]').prop('checked', this.checked);
+        });
+        $('input[name=selected]').on('change', function(){
+            $('input[name=selected_all]').prop('checked', this.checked);
+            if($('input[name=selected]:checked').length==$('input[name=selected]').length){
+                $('input[name=selected_all]').prop('checked',true);
+            }else{
+                $('input[name=selected_all]').prop('checked',false);
+            }
+        });
+        
+        // 삭제 버튼
+        function infoDelete(){
+            // 선택한 Checkbox 값 가져오기
+            let checkValue = $("input[name='selected]']:checked").val();
+            if(checkValue == ""){
+                alert("삭제할 행을 선택하세요.")
+                return false;
+            }
+
+            let res = confirm('정말로 삭제하시겠습니까?');
+            if(res){
+                let form = document.deleteForm;
+                form.submit();     
+                alert("성공적으로 삭제되었습니다.");       
+            }  
         }
-    });
-    
-    // 삭제 버튼
-    function infoDelete(){
-        // 선택한 Checkbox 값 가져오기
-        let checkValue = $("input[name='selected]']:checked").val();
-        if(checkValue == ""){
-            alert("삭제할 행을 선택하세요.")
-            return false;
-        }
-
-        let res = confirm('정말로 삭제하시겠습니까?');
-        if(res){
-            let form = document.deleteForm;
-            form.submit();     
-            alert("성공적으로 삭제되었습니다.");       
-        }
-
-       
-    }
-
-</script>
-
-<!-- <script>
-    let today = new Date();
-
-    let year = today.getFullYear(); // 년도
-    let month = today.getMonth() + 1; // 월
-    let day = today.getDate(); // 일
-    
-    document.getElementById('today').innerHTML = year + '년 ' + month + '월' + day + '일';
-</script> -->
+    </script>
 
 {% endblock %}
+

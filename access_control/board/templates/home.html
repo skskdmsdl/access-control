@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block contents %}
-<div class="row mt-5">
+<!-- <div class="row mt-5">
     <div class="col-12 text-center">
         <h1>홈페이지</h1>
     </div>
@@ -13,5 +13,123 @@
     <div class="col-6">
         <button class="btn btn-primary btn-block" onclick="location.href='/board/list/'">파일 보기</button>  
     </div>
-</div>
+</div> -->
+
+
+
+	<!-- header 
+   ================================================== -->
+   <header> 
+
+   	<div class="header-logo">
+	      <a href="#">Infinity</a>
+	   </div> 
+
+		<a id="header-menu-trigger" href="#0">
+		 	<span class="header-menu-text">Menu</span>
+		  	<span class="header-menu-icon"></span>
+		</a> 
+
+		<nav id="menu-nav-wrap">
+
+			<a href="#0" class="close-button" title="close"><span>Close</span></a>	
+
+	   	<h3>출입신청</h3>  
+
+			<ul class="nav-list">
+				<li class="current"><a class="smoothscroll" href="#home" title="">인덱스</a></li>
+				<li><a class="smoothscroll" href="#about" title="">신청목록</a></li>
+				<li><a class="smoothscroll" href="#admin" title="">관리자</a></li>					
+			</ul>	
+
+			<p class="sponsor-text">
+				Looking for an awesome and reliable webhosting? Try <a href="http://www.dreamhost.com/r.cgi?287326|STYLESHOUT">DreamHost</a>.
+				Get <span>$50 off</span> when you sign up with the promocode <span>styleshout</span>. 
+				<!-- Simply type	the promocode in the box labeled “Promo Code” when placing your order. -->
+			</p>			
+
+		</nav>  <!-- end #menu-nav-wrap -->
+
+	</header> <!-- end header -->  
+
+
+   <!-- home
+   ================================================== -->
+   <section id="home">
+
+   	<div class="overlay"></div>
+
+   	<div class="home-content-table">	
+		   <div class="home-content-tablecell">
+		   	<div class="row">
+		   		<div class="col-twelve">		   			
+			  		
+			  				<h3 class="animate-intro">전자도서관</h3>
+				  			<h1 class="animate-intro">
+							출입신청  <br>
+							관리 사이트
+				  			</h1>	
+
+				  			<div class="more animate-intro">
+				  				<a class="smoothscroll button stroke" href="#about">
+				  					Learn More
+				  				</a>
+				  			</div>							
+
+			  		</div> <!-- end col-twelve --> 
+		   	</div> <!-- end row --> 
+		   </div> <!-- end home-content-tablecell --> 		   
+		</div> <!-- end home-content-table -->
+
+		<div class="scrolldown">
+			<a href="#about" class="scroll-icon smoothscroll">		
+		   	Scroll Down		   	
+		   	<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+			</a>
+		</div>			
+   
+   </section> <!-- end home -->
+
+
+   <!-- board list
+   ================================================== -->
+   {% include "board_list.html" %}
+   <!-- end about -->
+
+
+	<!-- footer
+   ================================================== -->
+	<footer>
+   	 <div class="footer-bottom">
+
+      	<div class="row">
+
+      		<div class="col-twelve">
+	      		<div class="copyright">
+		         	<span>© Copyright Infinity 2021.</span> 
+		         	<span>Design by <a href="https://github.com/skskdmsdl">jei</a></span>		         	
+		         </div>		               
+	      	</div>
+
+      	</div>   	
+
+      </div> <!-- end footer-bottom -->
+
+      <div id="go-top">
+		   <a class="smoothscroll" title="Back to Top" href="#top">
+		   	<i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+		   </a>
+		</div>		
+   </footer>
+
+   <div id="preloader"> 
+    	<div id="loader"></div>
+   </div> 
+
+   <!-- Java Script
+   ================================================== --> 
+   <script src="/static/js/jquery-2.1.3.min.js"></script>
+   <script src="/static/js/plugins.js"></script>
+   <script src="/static/js/main.js"></script>
+
 {% endblock %}
