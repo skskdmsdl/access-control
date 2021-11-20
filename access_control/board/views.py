@@ -58,7 +58,6 @@ def update(request, pk):
     if request.method == 'POST':
         form = BoardForm(request.POST, request.FILES)
         if form.is_valid():
-            print(form.cleaned_data)
             board.start_date = form.cleaned_data['start_date']
             board.end_date = form.cleaned_data['end_date']
             board.company = form.cleaned_data['company']
@@ -69,9 +68,12 @@ def update(request, pk):
     else:
         return redirect('/board/detail/'+str(pk))
 
-def delete(request, pk):
-    board = Board.objects.get(pk=pk)
-    board.delete()
+
+def delete(request):
+    if request.method == 'POST':
+        pk_list = request.POST.getlist('selected')
+
+        Board.objects.filter(pk__in=pk_list).delete()
     return redirect('/board/list/')
 
 

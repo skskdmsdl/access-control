@@ -5,34 +5,38 @@
     <div class="col-12">
         <div class="mb-5 text-md-center font-weight-bold">{{ time|date:'Y년 m월 d일' }}</div>
         <!-- <a href="{% url 'excel_export' %}">Export to Excel</a> -->
-        <button class="btn btn-primary mb-2 ml-2 float-right" onclick="location.href='/board/%5Eexport/xls/$'">엑셀 다운로드</button>
-        <button class="btn btn-primary mb-2 float-right" onclick="location.href='/board/detail/{{ board.id }}/delete'">선택삭제</button>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th><input type="checkbox" name="selected_all"></th>
-                    <th>기간</th>
-                    <th>업체명</th>
-                    <th>직책</th>
-                    <th>이름</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for board in boards %}
-                    {% if board.start_date|date:'Ymd' <= time|date:'Ymd' and board.end_date|date:'Ymd' >= time|date:'Ymd' %}
-                    <tr onclick="location.href='/board/detail/{{ board.id }}'" style="cursor: pointer;">
-                        <td onclick="event.cancelBubble=true" style="cursor: default;">
-                            <input type="checkbox" name="selected" value="{{board.pk}}" />
-                        </td>
-                        <td>{{ board.start_date|date:'Y.m.d (D)' }} ~ {{ board.end_date|date:'Y.m.d (D)' }}</td>
-                        <td>{{ board.company }}</td>
-                        <td>{{ board.position }}</td>
-                        <td>{{ board.guest_name }}</td>                        
+        <form name='deleteForm' action="/board/delete/" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-primary mb-2 ml-2 float-right" onclick="location.href='/board/%5Eexport/xls/$'">엑셀 다운로드</button>
+            <!-- <button class="btn btn-primary mb-2 float-right" onclick="infoDelete();">선택삭제</button> -->
+            <input type="button" class="btn btn-primary mb-2 float-right" value="선택삭제" onclick="infoDelete();">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" name="selected_all"></th>
+                        <th>기간</th>
+                        <th>업체명</th>
+                        <th>직책</th>
+                        <th>이름</th>
                     </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for board in boards %}
+                        {% if board.start_date|date:'Ymd' <= time|date:'Ymd' and board.end_date|date:'Ymd' >= time|date:'Ymd' %}
+                        <tr onclick="location.href='/board/detail/{{ board.id }}'" style="cursor: pointer;">
+                            <td onclick="event.cancelBubble=true" style="cursor: default;">
+                                <input type="checkbox" name="selected" value="{{board.pk}}"/>
+                            </td>
+                            <td>{{ board.start_date|date:'Y.m.d (D)' }} ~ {{ board.end_date|date:'Y.m.d (D)' }}</td>
+                            <td>{{ board.company }}</td>
+                            <td>{{ board.position }}</td>
+                            <td>{{ board.guest_name }}</td>                        
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
     </div>
 </div>
 <div class="row">
@@ -54,11 +58,26 @@
             $('input[name=selected_all]').prop('checked',false);
         }
     });
+    
+    // 삭제 버튼
+    function infoDelete(){
+        // 선택한 Checkbox 값 가져오기
+        let checkValue = $("input[name='selected]']:checked").val();
+        if(checkValue == ""){
+            alert("삭제할 행을 선택하세요.")
+            return false;
+        }
 
-    // 선택한 Checkbox 값 가져오기
-    let arr = $('input[name=selected]:checked').serializeArray().map(function(item) { return item.value });
+        let res = confirm('정말로 삭제하시겠습니까?');
+        if(res){
+            let form = document.deleteForm;
+            form.submit();     
+            alert("성공적으로 삭제되었습니다.");       
+        }
 
-    //let str = $('input[name=selected]:checked').serialize(); // QueryString 방식 
+       
+    }
+
 </script>
 
 <!-- <script>
