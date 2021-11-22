@@ -26,9 +26,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^!$365=ocy)@f=q8lzz0n%=-rg_75rko49g^kr%=det1zq8+g+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'nanaeuni.pythonanywhere.com'
+]
 
 
 # Application definition
@@ -124,9 +126,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #static 파일들이 어디에 있는지를 적기
-STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,'board','static')
-] 
+# STATICFILES_DIRS=[
+#     os.path.join(BASE_DIR,'board','static')
+# ] 
 
 #static 파일들이 어디로 모일 것인지 적기
 STATIC_ROOT= os.path.join(BASE_DIR,'static')
