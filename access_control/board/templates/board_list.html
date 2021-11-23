@@ -195,7 +195,7 @@
         function infoDelete(){
             // 선택한 Checkbox 값 가져오기
             let checkValue = $('input[name=selected]:checked').serializeArray().map(function(item) { return item.value });
-            if(checkValue == undefined){
+            if(checkValue == ""){
                 alert("삭제할 행을 선택하세요.")
                 return false;
             }
