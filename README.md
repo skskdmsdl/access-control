@@ -14,6 +14,7 @@ Django_Personal_Project
 * PythonAnywhere
 
 # Features
+* 출입 명부 조회
 * 게시판 등록/수정
 * 게시판 선택 삭제
 * 엑셀 export
