@@ -20,6 +20,9 @@ Django_Personal_Project
 * 엑셀 export
 * 관리자 페이지
 
+# Information
+127.0.0.1:8000/
+
 # 배포 URL
 https://nanaeuni.pythonanywhere.com/
 
