@@ -21,7 +21,7 @@ Django_Personal_Project
 * 관리자 페이지
 
 # Information
-127.0.0.1:8000/
+http://127.0.0.1:8000/
 
 # 배포 URL
 https://nanaeuni.pythonanywhere.com/
