@@ -17,7 +17,7 @@ Django_Personal_Project
 * 출입 명단 조회
 * 게시판 등록/수정
 * 게시판 선택 삭제
-* 엑셀 export
+* 엑셀 다운로드(export)
 * 관리자 페이지
 
 # Information
