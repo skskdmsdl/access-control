@@ -22,6 +22,13 @@ Django_Personal_Project
 
 # Information
 http://127.0.0.1:8000/
+settings.py에서 
+```
+DEBUG = True
+ALLOWED_HOSTS = []
+```
+로 변경해야 로컬에서 실행 가능
+
 
 # 배포 URL
 https://nanaeuni.pythonanywhere.com/
