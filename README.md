@@ -21,7 +21,7 @@ Django_Personal_Project
 * 관리자 페이지
 
 # Information
-http://127.0.0.1:8000/ <
+http://127.0.0.1:8000/ <br/>
 settings.py에서 
 ```
 DEBUG = True
