@@ -22,7 +22,7 @@ Django_Personal_Project
 
 # Information
 http://127.0.0.1:8000/ <br/>
-settings.py에서 
+settings.py에서 파이썬 애니웨어 배포를 위해 설정해두었던 부부을 다시 변경해줘야 
 ```
 DEBUG = True
 ALLOWED_HOSTS = []
